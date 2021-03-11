@@ -10,7 +10,6 @@ app.use(cors());
 const users = [];
 
 function checksExistsUserAccount(request, response, next) {
-  // Complete aqui
   const { username } = request.headers;
 
   const user = users.find((user) => user.username === username);
@@ -23,7 +22,6 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
   const { user } = request;
 
   if (!user.pro && user.todos.length >= 10) {
@@ -36,21 +34,19 @@ function checksCreateTodosUserAvailability(request, response, next) {
 }
 
 function checksTodoExists(request, response, next) {
-  // Complete aqui
   const { username } = request.headers;
   const { id } = request.params;
 
   const user = users.find((user) => user.username === username);
 
   if (!user) {
-    // return response.status(404).json({ data: "user not found" });
     return response.status(404).json({ error: "user not found" });
   }
-  console.log(id);
+
   const isValidId = validate(id);
 
   if (!isValidId) {
-    return response.status(400).json({ error: "invalid id" });
+    return response.status(400).json({ error: "TODO id is invalid!" });
   }
 
   const todo = user.todos.find((todo) => todo.id === id);
@@ -66,7 +62,6 @@ function checksTodoExists(request, response, next) {
 }
 
 function findUserById(request, response, next) {
-  // Complete aqui
   const { id } = request.params;
 
   const foundUser = users.find((user) => user.id === id);
